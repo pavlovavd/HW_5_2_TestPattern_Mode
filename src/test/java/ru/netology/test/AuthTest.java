@@ -27,9 +27,9 @@ public class AuthTest {
     void shouldSuccessfulLoginIfRegisteredActiveUser() {
         Configuration.holdBrowserOpen = true;
         var registeredUser = getRegisteredUser("active");
-        $("[data-test-id='login'] input").setValue(registeredUser.getLogin());
-        $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
-        $("[data-test-id='action-login']").click();
+        $("[data-test-id=login] input").setValue(registeredUser.getLogin());
+        $("[data-test-id=password] input").setValue(registeredUser.getPassword());
+        $("[data-test-id=action-login]").click();
         $$("h2").find(exactText("Личный кабинет")).shouldHave(Condition.text("Личный кабинет"),
                 Duration.ofSeconds(10));
     }
@@ -39,9 +39,9 @@ public class AuthTest {
     void shouldGetErrorIfNotRegisteredUser() {
         Configuration.holdBrowserOpen = true;
         var notRegisteredUser = getUser("active");
-        $("[data-test-id='login'] input").setValue(notRegisteredUser.getLogin());
-        $("[data-test-id='password'] input").setValue(notRegisteredUser.getPassword());
-        $("[data-test-id='action-login']").click();
+        $("[data-test-id=login] input").setValue(notRegisteredUser.getLogin());
+        $("[data-test-id=password] input").setValue(notRegisteredUser.getPassword());
+        $("[data-test-id=action-login]").click();
         $("[data-test-id=error-notification]").should(Condition.text("Ошибка"),Duration.ofSeconds(15));
     }
 
@@ -50,9 +50,9 @@ public class AuthTest {
     void shouldGetErrorIfBlockedUser() {
         Configuration.holdBrowserOpen = true;
         var blockedUser = getRegisteredUser("blocked");
-        $("[data-test-id='login'] input").setValue(blockedUser.getLogin());
-        $("[data-test-id='password'] input").setValue(blockedUser.getPassword());
-        $("[data-test-id='action-login']").click();
+        $("[data-test-id=login] input").setValue(blockedUser.getLogin());
+        $("[data-test-id=password] input").setValue(blockedUser.getPassword());
+        $("[data-test-id=action-login]").click();
         $("[data-test-id=error-notification]").should(Condition.text("Ошибка"),Duration.ofSeconds(15));
     }
 
@@ -62,9 +62,9 @@ public class AuthTest {
         Configuration.holdBrowserOpen = true;
         var registeredUser = getRegisteredUser("active");
         var wrongLogin = getRandomLogin();
-        $("[data-test-id='login'] input").setValue(wrongLogin);
-        $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
-        $("[data-test-id='action-login']").click();
+        $("[data-test-id=login] input").setValue(wrongLogin);
+        $("[data-test-id=password] input").setValue(registeredUser.getPassword());
+        $("[data-test-id=action-login]").click();
         $("[data-test-id=error-notification]").should(Condition.text("Ошибка"),Duration.ofSeconds(15));
     }
 
@@ -74,9 +74,9 @@ public class AuthTest {
         Configuration.holdBrowserOpen = true;
         var registeredUser = getRegisteredUser("active");
         var wrongPassword = getRandomPassword();
-        $("[data-test-id='login'] input").setValue(registeredUser.getLogin());
-        $("[data-test-id='password'] input").setValue(wrongPassword);
-        $("[data-test-id='action-login']").click();
+        $("[data-test-id=login] input").setValue(registeredUser.getLogin());
+        $("[data-test-id=password] input").setValue(wrongPassword);
+        $("[data-test-id=action-login]").click();
         $("[data-test-id=error-notification]").should(Condition.text("Ошибка"),Duration.ofSeconds(15));
     }
 }
