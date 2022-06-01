@@ -9,6 +9,8 @@ import lombok.Value;
 
 import java.util.Locale;
 
+import static io.restassured.RestAssured.given;
+
 public class DataGenerator {
 
     private static final RequestSpecification requestSpec = new RequestSpecBuilder()
@@ -23,21 +25,25 @@ public class DataGenerator {
     private DataGenerator() {
     }
 
-    private static void sendRequest(RegistrationDto user) {
-        // TODO: отправить запрос на указанный в требованиях path, передав в body запроса объект user
-        //  и не забудьте передать подготовленную спецификацию requestSpec.
-        //  Пример реализации метода показан в условии к задаче.
+
+    // Todo: Отправить запрос на указанный в требованиях path, передав в body запроса объект и подготовленную спецификацию requestSpec.
+    private static void sendRequest(RegistrationInfo user) {
+        given() // "дано"
+                .spec(requestSpec) // указываем, какую спецификацию используем
+                .body(user) // передаём в теле объект, который будет преобразован в JSON
+                .when() // "когда"
+                .post("/api/system/users") // на какой путь, относительно BaseUri отправляем запрос
+                .then() // "тогда ожидаем"
+                .statusCode(200); // код 200 OK
     }
 
     public static String getRandomLogin() {
-        // TODO: добавить логику для объявления переменной login и задания её значения, для генерации
-        //  случайного логина используйте faker
+        String login = faker.name().username();
         return login;
     }
 
     public static String getRandomPassword() {
-        // TODO: добавить логику для объявления переменной password и задания её значения, для генерации
-        //  случайного пароля используйте faker
+        String password = faker.internet().password();
         return password;
     }
 
@@ -45,20 +51,23 @@ public class DataGenerator {
         private Registration() {
         }
 
-        public static RegistrationDto getUser(String status) {
-            // TODO: создать пользователя user используя методы getRandomLogin(), getRandomPassword() и параметр status
+        public static RegistrationInfo getUser(String status) {
+            RegistrationInfo user = new RegistrationInfo(getRandomLogin(), getRandomPassword(), status);
+            // Создать пользователя user используя методы getRandomLogin(), getRandomPassword() и параметр status
             return user;
         }
 
-        public static RegistrationDto getRegisteredUser(String status) {
-            // TODO: объявить переменную registeredUser и присвоить ей значение возвращённое getUser(status).
+        public static RegistrationInfo getRegisteredUser(String status) {
+            RegistrationInfo registeredUser = getUser(status);
+            // Объявить переменную registeredUser и присвоить ей значение возвращённое getUser(status).
+            sendRequest(registeredUser);
             // Послать запрос на регистрацию пользователя с помощью вызова sendRequest(registeredUser)
             return registeredUser;
         }
     }
 
     @Value
-    public static class RegistrationDto {
+    public static class RegistrationInfo {
         String login;
         String password;
         String status;

@@ -4,6 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Selenide.open;
+import static ru.netology.data.DataGenerator.Registration.getRegisteredUser;
+import static ru.netology.data.DataGenerator.Registration.getUser;
+import static ru.netology.data.DataGenerator.getRandomLogin;
+import static ru.netology.data.DataGenerator.getRandomPassword;
+
 public class AuthTest {
 
     @BeforeEach
