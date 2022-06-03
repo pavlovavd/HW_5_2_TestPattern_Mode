@@ -25,8 +25,7 @@ public class DataGenerator {
     private DataGenerator() {
     }
 
-
-    // Todo: Отправить запрос на указанный в требованиях path, передав в body запроса объект и подготовленную спецификацию requestSpec.
+    //Отправить запрос на указанный в требованиях path, передав в body запроса объект и подготовленную спецификацию requestSpec.
     private static void sendRequest(RegistrationInfo user) {
         given() // "дано"
                 .spec(requestSpec) // указываем, какую спецификацию используем
